@@ -1,27 +1,17 @@
 package models;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ResourceEvent {
 
-    private ArrayList<Event> events = new ArrayList<Event>();
+
+    private ObservableList<Event> listEvents = FXCollections.observableArrayList();
 
     public  void addA(Event e){
-        events.add(e);
+        getListEvents().add(e);
     }
-
-    public ArrayList<Event> getArrayList(){
-        return events;
-    }
-
-    public String getEvent(){
-        String result = "";
-        for (int i =0; i < events.size();i++) {
-            String text = (i+1)+"."+" Event :  "+ events.get(i).getNameEvent()+" | Date&Time :  "+events.get(i).getDate()+
-                    " | Priority :  "+events.get(i).getPriority()+" \n";
-            result += text;
-        }
-
-        return  result;
+    public ObservableList<Event> getListEvents() {
+        return listEvents;
     }
 }

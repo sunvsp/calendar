@@ -31,4 +31,10 @@ public class Event {
     public String getPriority() {
         return priority;
     }
+
+    @Override
+    public String toString(){
+        return " Event :  "+ getNameEvent()+" | Date&Time :  "+getDate()+
+                " | Priority :  "+getPriority();
+    }
 }
