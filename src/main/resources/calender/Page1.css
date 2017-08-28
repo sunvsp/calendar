@@ -1,0 +1,40 @@
+
+
+.background {
+    -fx-background-color: lavender;
+}
+
+#add{
+    -fx-background-color: white;
+}
+#add:hover{
+    -fx-background-color: blanchedalmond;
+
+}
+#add:pressed{
+    -fx-background-color: lemonchiffon;
+}
+
+
+
+.button-time{
+    -fx-background-color: white;
+}
+
+.button-time:hover{
+    -fx-background-color: blanchedalmond;
+}
+
+
+.button-priority{
+    -fx-background-color: white;
+}
+
+.button-priority:hover{
+    -fx-background-color: lemonchiffon;
+}
+
+
+#field:hover{
+    -fx-background-color: lemonchiffon;
+}

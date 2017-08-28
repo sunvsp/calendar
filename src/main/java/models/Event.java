@@ -21,9 +21,6 @@ public class Event {
         return nameEvent;
     }
 
-
-
-
     public String getDate(){
         String dateToStr = DateFormat.getInstance().format(myTime);
         return dateToStr;

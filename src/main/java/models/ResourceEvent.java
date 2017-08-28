@@ -11,6 +11,7 @@ public class ResourceEvent {
     public  void addA(Event e){
         getListEvents().add(e);
     }
+
     public ObservableList<Event> getListEvents() {
         return listEvents;
     }
