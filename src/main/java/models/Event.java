@@ -23,6 +23,7 @@ public class Event {
 
 
 
+
     public String getDate(){
         String dateToStr = DateFormat.getInstance().format(myTime);
         return dateToStr;
