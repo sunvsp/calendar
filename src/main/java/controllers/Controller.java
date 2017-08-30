@@ -5,19 +5,20 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import models.Event;
-import models.ResourceEvent;
+import javafx.stage.Stage;
+import models.Appointment;
+import models.ResourceAppointment;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Observable;
 
-public class Controller {
+public class Controller  extends Observable{
 
-    ResourceEvent resourceEvent ;
-    public Controller(){
-        resourceEvent = new ResourceEvent();
-    }
 
+    private static int count = 1;
+
+    private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
     ObservableList<String> itemP = FXCollections.observableArrayList("None","!","!!","!!!");
     ObservableList<String> itemH = FXCollections.observableArrayList("00","01","02","03","04",
             "05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23");
@@ -26,6 +27,8 @@ public class Controller {
             "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41",
             "42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
 
+
+    private boolean check = false;
 
     @FXML
     private Button add;
@@ -39,8 +42,7 @@ public class Controller {
     private TextField field;
     @FXML
     private DatePicker datePicker;
-    @FXML
-    private ListView listView;
+
 
 
     //set
@@ -66,10 +68,11 @@ public class Controller {
             e1.printStackTrace();
         }
         finally {
-            resetButton();
+            check = true;
         }
-        listView.setItems(resourceEvent.getListEvents());
-
+       // System.out.println(resourceAppointment.getListAppointment());
+        setChanged();
+        notifyObservers(null);
     }
 
     public void addAppointment() throws ParseException{
@@ -83,14 +86,17 @@ public class Controller {
 //        System.out.println(hour.getText());
 //        System.out.println(minute.getText());
 //        System.out.println(priority.getValue().toString());
-        Event event = new Event(field.getText(),time.getDayOfMonth(),time.getMonthValue(),
-                time.getYear(),hour.getValue().toString(),minute.getValue().toString(),priority.getValue().toString());
+          Appointment appointment = new Appointment(field.getText(),time.getDayOfMonth(),time.getMonthValue(),
+                time.getYear(),hour.getValue().toString(),minute.getValue().toString(),priority.getValue().toString(),count+"");
         //debug event
 //        System.out.println(event.getNameEvent());
 //        System.out.println(event.getPriority());
 //        System.out.println(event.getDate());
+        count++;
+        resourceAppointment.addApointment(appointment);
+//        System.out.println(resourceAppointment.getListAppointment());
+        closePage();
 
-        resourceEvent.addA(event);
     }
 
     private void resetButton(){
@@ -100,5 +106,17 @@ public class Controller {
         minute.setValue("00");
         hour.setValue("00");
     }
+
+
+
+
+    public void closePage(){
+        // get a handle to the stage
+        Stage stage = (Stage) add.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+
+
 
 }

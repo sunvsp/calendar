@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller" >
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="86.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="258.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="56.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="82.0" minHeight="5.0" prefHeight="52.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="BOTTOM_LEFT" maxHeight="1.7976931348623157E308" prefHeight="17.0" prefWidth="149.0" text="Add Appointment" textFill="RED" underline="true" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="48.0" text="Title : " GridPane.rowIndex="1">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="48.0" text="Date : " GridPane.rowIndex="2">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="48.0" text="Piority : " GridPane.rowIndex="5">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <ChoiceBox fx:id="priority" prefHeight="29.0" prefWidth="168.0" styleClass="button-priority" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="add" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButton" text="add" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <DatePicker fx:id="datePicker" prefHeight="21.0" prefWidth="212.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="48.0" text="Time : " GridPane.rowIndex="4">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="72.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="25.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="72.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="90.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="::" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="hour" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="64.0" styleClass="button-time">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ComboBox>
+                  <ComboBox fx:id="minute" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="66.0" styleClass="button-time" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+            <Label maxWidth="1.7976931348623157E308" text="      Hour       ::      Minute" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
