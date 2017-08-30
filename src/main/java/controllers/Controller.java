@@ -17,7 +17,7 @@ public class Controller  extends Observable{
 
 
     private static int count = 1;
-
+    @FXML private MenuItem exit,about;
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
     ObservableList<String> itemP = FXCollections.observableArrayList("None","!","!!","!!!");
     ObservableList<String> itemH = FXCollections.observableArrayList("00","01","02","03","04",
@@ -58,6 +58,10 @@ public class Controller  extends Observable{
 
     }
 
+    @FXML
+    public  void exitMenu(ActionEvent e){
+        closePage();
+    }
 
     //method
     @FXML
@@ -69,6 +73,7 @@ public class Controller  extends Observable{
         }
         finally {
             check = true;
+            closePage();
         }
        // System.out.println(resourceAppointment.getListAppointment());
         setChanged();
@@ -95,7 +100,7 @@ public class Controller  extends Observable{
         count++;
         resourceAppointment.addApointment(appointment);
 //        System.out.println(resourceAppointment.getListAppointment());
-        closePage();
+
 
     }
 
