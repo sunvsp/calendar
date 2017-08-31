@@ -19,6 +19,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem fx:id="news" mnemonicParsing="false" onAction="#buttonAddAp" text="New" />
               <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Close" />
             </items>
           </Menu>

@@ -30,7 +30,7 @@ public class MainController implements Observer{
     @FXML private TableView<Appointment> tableView;
     @FXML private Button addAppointment;
     @FXML private Stage stage;
-    @FXML private MenuItem exit,about;
+    @FXML private MenuItem exit,about,news;
     @FXML private TableColumn<Appointment, SimpleStringProperty> order;
     @FXML private TableColumn<Appointment, SimpleStringProperty> title;
     @FXML private TableColumn<Appointment, SimpleStringProperty> date;

@@ -18,10 +18,10 @@ public class ResourceAppointmentTest {
 
     @Test
     public void addA() throws Exception {
-        ObservableList<Appointment> listAppointment = FXCollections.observableArrayList();
+        ResourceAppointment r = new ResourceAppointment();
         Appointment appointment = createAppointment();
-        listAppointment.add(appointment);
-        assertEquals(appointment,listAppointment.get(0));
+        r.addApointment(appointment);
+        assertEquals(appointment,r.getListAppointment().get(0));
 
     }
 
