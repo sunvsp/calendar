@@ -54,7 +54,7 @@ public class MainController implements Observer{
     @FXML
     public void buttonAddAp(ActionEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../calender/AddAppointment.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/calender/AddAppointment.fxml"));
             Parent window = loader.load();
             Controller controller = loader.getController();
             controller.addObserver(this);
