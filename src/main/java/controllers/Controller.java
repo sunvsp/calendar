@@ -17,6 +17,7 @@ public class Controller  extends Observable{
 
 
     private static int count = 1;
+    private Appointment appointment;
     @FXML private MenuItem exit,about;
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
     ObservableList<String> itemP = FXCollections.observableArrayList("None","!","!!","!!!");
@@ -66,8 +67,9 @@ public class Controller  extends Observable{
     //method
     @FXML
     public void handleButton(ActionEvent e){
+
         try {
-            addAppointment();
+            appointment = addAppointment();
         } catch (ParseException e1) {
             e1.printStackTrace();
         }
@@ -77,10 +79,10 @@ public class Controller  extends Observable{
         }
        // System.out.println(resourceAppointment.getListAppointment());
         setChanged();
-        notifyObservers(null);
+        notifyObservers(appointment);
     }
 
-    public void addAppointment() throws ParseException{
+    public Appointment addAppointment() throws ParseException{
         LocalDate time = datePicker.getValue();
         //debug getValue
 //        System.out.println(time.toString());
@@ -100,17 +102,10 @@ public class Controller  extends Observable{
         count++;
         resourceAppointment.addApointment(appointment);
 //        System.out.println(resourceAppointment.getListAppointment());
-
+        return appointment;
 
     }
 
-    private void resetButton(){
-        field.clear();
-        datePicker.setValue(LocalDate.now());
-        priority.setValue("None");
-        minute.setValue("00");
-        hour.setValue("00");
-    }
 
 
 

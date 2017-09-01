@@ -24,7 +24,7 @@ public class MainController implements Observer{
 
     private Database database;
     private ResourceAppointment resourceAppointment ;
-    private Controller controller;
+
 
 
     @FXML private TableView<Appointment> tableView;
@@ -68,16 +68,21 @@ public class MainController implements Observer{
             e.printStackTrace();
         }
 
+
+
     }
 
     @FXML
     public void exitProgram(){
         System.exit(0);
+
     }
 
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object appointment) {
+        database.connectDatebase();
+        database.insertData((Appointment) appointment);
         tableView.setItems(resourceAppointment.getListAppointment());
         tableView.refresh();
     }
