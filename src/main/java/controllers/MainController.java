@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import models.Appointment;
+import models.Database;
 import models.ResourceAppointment;
 
 import java.util.Observable;
@@ -23,6 +22,7 @@ import java.util.Observer;
 
 public class MainController implements Observer{
 
+    private Database database;
     private ResourceAppointment resourceAppointment ;
     private Controller controller;
 
@@ -39,6 +39,7 @@ public class MainController implements Observer{
 
     public MainController(){
         resourceAppointment = ResourceAppointment.getInstance();
+        database = new Database();
     }
 
     @FXML
@@ -54,7 +55,7 @@ public class MainController implements Observer{
     @FXML
     public void buttonAddAp(ActionEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/calender/AddAppointment.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/AddAppointment.fxml"));
             Parent window = loader.load();
             Controller controller = loader.getController();
             controller.addObserver(this);

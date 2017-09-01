@@ -1,5 +1,3 @@
-import controllers.Controller;
-import controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +9,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Parent root = FXMLLoader.load(getClass().getResource("calender/MainPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("calendar/MainPage.fxml"));
         primaryStage.setTitle("Calenders");
         primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.setResizable(false);
