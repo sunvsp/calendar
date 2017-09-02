@@ -16,7 +16,7 @@ import java.util.Observable;
 public class ControllerAdd extends Observable{
 
 
-    private int count = 1;
+    private int count;
     private Appointment appointment;
     @FXML private MenuItem exit,about;
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
