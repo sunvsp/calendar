@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Observable;
 
-public class Controller  extends Observable{
+public class ControllerAdd extends Observable{
 
 
     private int count = 1;

@@ -27,7 +27,7 @@ public class Appointment {
 
         setTitle(new SimpleStringProperty(nameEvent));
         setDate(new SimpleStringProperty(formatDate.format(getMyTime())));
-        setTime(new SimpleStringProperty(formatTime.format(getMyTime())));
+        time = new SimpleStringProperty(formatTime.format(myTime));
         this.setPriority(new SimpleStringProperty(priority));
         this.setOrder(new SimpleStringProperty(order));
     }
@@ -39,7 +39,6 @@ public class Appointment {
     public String getDate(){
         return "     "+ getDates().get();
     }
-
     public String getTime(){
         return "        "+ getTimes().get();
     }

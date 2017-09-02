@@ -1,0 +1,102 @@
+package controllers;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import models.Appointment;
+import models.ResourceAppointment;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Observable;
+
+public class ControllerEdit extends Observable {
+
+
+
+    private Appointment appointment;
+
+    private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
+    private ObservableList<String> itemP = FXCollections.observableArrayList("None","!","!!","!!!");
+    private ObservableList<String> itemH = FXCollections.observableArrayList("00","01","02","03","04",
+            "05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23");
+    private ObservableList<String> itemM = FXCollections.observableArrayList("00","01","02","03","04",
+            "05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23",
+            "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41",
+            "42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
+
+
+    @FXML private Button submit;
+    @FXML private ChoiceBox priority;
+    @FXML private ComboBox hour;
+    @FXML private ComboBox minute;
+    @FXML private TextField field;
+    @FXML private DatePicker datePicker;
+    @FXML private MenuItem exit,about;
+
+
+    //set
+    @FXML
+    private void initialize(){
+        priority.setItems(itemP);
+        hour.setItems(itemH);
+        minute.setItems(itemM);
+    }
+
+    @FXML
+    public void submitButton(ActionEvent event){
+//        Appointment appointment = new Appointment(count +"",field.getText(),time.getDayOfMonth(),time.getMonthValue(),
+//                time.getYear(),hour.getValue().toString(),minute.getValue().toString(),priority.getValue().toString() );
+        try {
+            LocalDate time = datePicker.getValue();
+            appointment.setTitle(new SimpleStringProperty(field.getText()));
+            DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date myTime = dateTimeFormat.parse(time.getDayOfMonth() + "/" + time.getMonthValue() +
+                    "/" + time.getYear() + " " + hour.getValue().toString() + ":" + minute.getValue().toString());
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
+            appointment.setDate(new SimpleStringProperty(formatDate.format(myTime)));
+            appointment.setTime(new SimpleStringProperty(formatTime.format(myTime)));
+            appointment.setPriority(new SimpleStringProperty(priority.getValue().toString()));
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        setChanged();
+        notifyObservers(appointment);
+        closePage();
+
+    }
+
+    public void setAp(Appointment appointment){
+        this.appointment =appointment;
+        field.setText(appointment.getTitle().trim());
+        String time = appointment.getTime().trim();
+        hour.setValue(time.substring(3));
+
+        minute.setValue(time.substring(3,5));
+        priority.setValue(appointment.getPriority().trim());
+        String date = appointment.getDate().trim();
+        LocalDate d = LocalDate.parse(date.substring(6,10)+"-"+date.substring(3,5)+"-"+date.substring(0,2));
+        //System.out.println(d);
+        datePicker.setValue(d);
+    }
+
+
+    @FXML
+    public  void exitMenu(ActionEvent e){
+        closePage();
+    }
+    public void closePage(){
+        // get a handle to the stage
+        Stage stage = (Stage) submit.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+}

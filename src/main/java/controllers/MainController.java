@@ -28,7 +28,9 @@ public class MainController implements Observer{
 
     private Database database;
     private ResourceAppointment resourceAppointment ;
-    private Controller controller;
+    private ControllerAdd controllerAdd;
+    private ControllerEdit controllerEdit;
+
 
 
 
@@ -87,20 +89,41 @@ public class MainController implements Observer{
 
     public void editAppointment(){
         //System.out.println("Edit!!!");
+        Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
+        if(productSelected != null) {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/EditAppointment.fxml"));
+                Parent window = loader.load();
+                controllerEdit = loader.getController();
+                controllerEdit.addObserver(this);
+                controllerEdit.setAp(productSelected);
+                stage = new Stage();
+                stage.setTitle("EditAppointment");
+                stage.setScene(new Scene(window,400,280));
+                stage.setResizable(false);
+                stage.show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
     }
 
 
     public void deleteAppointment(){
+
         //System.out.println("Delete!!!");
         Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
         //System.out.println(productSelected.getTitle());
         //System.out.println(productSelected.getOrder().trim());
-        resourceAppointment.deleteAp(productSelected);
-        refresh();
-        database.deleteData(Integer.parseInt(productSelected.getOrder().trim()));
-        updateIdDatabase(Integer.parseInt(productSelected.getOrder().trim()),resourceAppointment.getListAppointment().size());
-
+       if(productSelected != null) {
+            resourceAppointment.deleteAp(productSelected);
+            refresh();
+            database.deleteData(Integer.parseInt(productSelected.getOrder().trim()));
+            if(resourceAppointment.getListAppointment().size() > 0) {
+                updateIdDatabase(Integer.parseInt(productSelected.getOrder().trim()), resourceAppointment.getListAppointment().size());
+            }
+       }
     }
 
 
@@ -114,9 +137,9 @@ public class MainController implements Observer{
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/AddAppointment.fxml"));
             Parent window = loader.load();
-            controller = loader.getController();
-            controller.addObserver(this);
-            controller.setCount(resourceAppointment.getListAppointment().size()+1);
+            controllerAdd = loader.getController();
+            controllerAdd.addObserver(this);
+            controllerAdd.setCount(resourceAppointment.getListAppointment().size()+1);
             stage = new Stage();
             stage.setTitle("New Appointment");
             stage.setScene(new Scene(window,400,280));
@@ -136,7 +159,12 @@ public class MainController implements Observer{
 
     @Override
     public void update(Observable o, Object appointment) {
-        database.insertData((Appointment) appointment);
+        if(o instanceof ControllerAdd){
+            database.insertData((Appointment) appointment);
+        }
+        if(o instanceof  ControllerEdit){
+            database.updateDatabase((Appointment) appointment);
+        }
         refresh();
     }
 

@@ -54,10 +54,10 @@ public class Database {
 //                System.out.println(order+" "+title+" "+date+" "+time+" "+priority);
                 //String order,String nameEvent, int day, int month, int year, String hour, String minute, String priority
 //                System.out.println(date.substring(0,2)+"/"+date.substring(3,5)+"/"+
-//                        date.substring(6,10)+" "+time.substring(3)+":"+time.substring(3,5));
+//                        date.substring(6,10)+" "+time.substring(0,2)+":"+time.substring(3,5));
                 Appointment appointment = new Appointment(order,title,Integer.parseInt(date.substring(0,2)),
                         Integer.parseInt(date.substring(3,5)), Integer.parseInt(date.substring(6,10)),
-                        time.substring(3),time.substring(3,5),priority);
+                        time.substring(0,2),time.substring(3,5),priority);
                 listAppointments.add(appointment);
 
             }
@@ -92,6 +92,32 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    public void updateDatabase(Appointment appointment){
+        String sql = "UPDATE eventCalendar SET 'Title' = ? , "
+                + "'Date' = ? , "
+                +"'Time' = ? ,"
+                +"'Priority' = ? "
+                + "WHERE Id = ?";
+        //System.out.println(appointment.getTitle().trim()+" "+appointment.getDate().trim()+" "+
+        //appointment.getTime().trim()+" "+appointment.getPriority().trim());
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setString(1, appointment.getTitle().trim());
+            pstmt.setString(2, appointment.getDate().trim());
+            pstmt.setString(3, appointment.getTime().trim());
+            pstmt.setString(4, appointment.getPriority().trim());
+            pstmt.setInt(5,Integer.parseInt(appointment.getOrder().trim()));
+            // update
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public void closeDatabase(){
         try {
             conn.close();
