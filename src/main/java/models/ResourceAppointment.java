@@ -31,13 +31,21 @@ public class ResourceAppointment {
     }
 
     public void deleteAp(Appointment appointment){
-        for (int i = Integer.parseInt(appointment.getOrder().trim()) - 1; i < listAppointments.size(); i++) {
-            int order = Integer.parseInt(listAppointments.get(i).getOrder().trim());
-            order--;
-            listAppointments.get(i).setOrder(new SimpleStringProperty(order + ""));
 
+        if(listAppointments.size() > 0) {
+
+            for (int i = Integer.parseInt(appointment.getOrder().trim()) - 1; i < listAppointments.size(); i++) {
+
+
+                int order = Integer.parseInt(listAppointments.get(i).getOrder().trim());
+                if(order > 1) {
+                    order--;
+                    listAppointments.get(i).setOrder(new SimpleStringProperty(order + ""));
+                }
+
+            }
         }
-        listAppointments.remove(Integer.parseInt(appointment.getOrder().trim()));
+        listAppointments.remove(appointment);
 
 
 //        System.out.println(listAppointments);

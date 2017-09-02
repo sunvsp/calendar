@@ -120,9 +120,11 @@ public class MainController implements Observer{
             resourceAppointment.deleteAp(productSelected);
             refresh();
             database.deleteData(Integer.parseInt(productSelected.getOrder().trim()));
+
             if(resourceAppointment.getListAppointment().size() > 0) {
                 updateIdDatabase(Integer.parseInt(productSelected.getOrder().trim()), resourceAppointment.getListAppointment().size());
             }
+//           database.readAndAddData();
        }
     }
 
