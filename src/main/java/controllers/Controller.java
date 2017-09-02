@@ -16,7 +16,7 @@ import java.util.Observable;
 public class Controller  extends Observable{
 
 
-    private static int count = 1;
+    private int count = 1;
     private Appointment appointment;
     @FXML private MenuItem exit,about;
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
@@ -88,7 +88,6 @@ public class Controller  extends Observable{
 //        System.out.println(event.getNameEvent());
 //        System.out.println(event.getPriority());
 //        System.out.println(event.getDate());
-        count++;
         resourceAppointment.addApointment(appointment);
 //        System.out.println(resourceAppointment.getListAppointment());
         return appointment;

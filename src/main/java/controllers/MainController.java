@@ -47,6 +47,8 @@ public class MainController implements Observer{
         resourceAppointment = ResourceAppointment.getInstance();
         database = new Database();
         resourceAppointment.setListAppointments(database.readAndAddData());
+//        database.updateData(1,2);
+//        database.readAndAddData();
     }
 
     //setting
@@ -63,8 +65,8 @@ public class MainController implements Observer{
         cm.getItems().add(mi1);
         MenuItem mi2 = new MenuItem("Delete");
         cm.getItems().add(mi2);
-        mi1.setOnAction(this::editAppointment);
-        mi2.setOnAction(this::deleteAppointment);
+        mi1.setOnAction(event -> editAppointment());
+        mi2.setOnAction(event -> deleteAppointment());
         tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -72,26 +74,39 @@ public class MainController implements Observer{
                 if(event.getButton() == MouseButton.SECONDARY)
                 {
                     cm.show(tableView , event.getScreenX() , event.getScreenY());
-                    System.out.println("Right Click!!!");
+                   // System.out.println("Right Click!!!");
                 }else{
                     cm.hide();
-                    System.out.println("Left Click!!!!");
+                   // System.out.println("Left Click!!!!");
                 }
             }
         });
     }
 
 
-    @FXML
-    public void editAppointment(ActionEvent event){
-        System.out.println("Edit!!!");
+
+    public void editAppointment(){
+        //System.out.println("Edit!!!");
+
     }
 
-    @FXML
-    public void deleteAppointment(ActionEvent event){
-        System.out.println("Delete!!!");
+
+    public void deleteAppointment(){
+        //System.out.println("Delete!!!");
+        Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
+        //System.out.println(productSelected.getTitle());
+        //System.out.println(productSelected.getOrder().trim());
+        resourceAppointment.deleteAp(productSelected);
+        refresh();
+        database.deleteData(Integer.parseInt(productSelected.getOrder().trim()));
+        updateIdDatabase(Integer.parseInt(productSelected.getOrder().trim()),resourceAppointment.getListAppointment().size());
+
     }
 
+
+    public void updateIdDatabase(int start,int begin){
+        database.updateData(start,begin);
+    }
 
 
     @FXML

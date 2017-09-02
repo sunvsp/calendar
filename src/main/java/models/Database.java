@@ -28,8 +28,8 @@ public class Database {
 
     public void insertData(Appointment a){
         try {
-            String query = "INSERT INTO eventCalendar ('Order','Title','Date','Time','Priority') " +
-                    "VALUES ('"+a.getOrder().trim()+"','"+a.getTitle().trim()+"','"+a.getDate().trim()+
+            String query = "INSERT INTO eventCalendar (Id,'Title','Date','Time','Priority') " +
+                    "VALUES ("+Integer.parseInt(a.getOrder().trim())+",'"+a.getTitle().trim()+"','"+a.getDate().trim()+
                     "','"+a.getTime().trim()+"','"+a.getPriority().trim()+"');";
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
@@ -51,7 +51,7 @@ public class Database {
                 String date  = resultSet.getString(3);
                 String time  = resultSet.getString(4);
                 String priority = resultSet.getString(5);
-                System.out.println(order+" "+title+" "+date+" "+time+" "+priority);
+//                System.out.println(order+" "+title+" "+date+" "+time+" "+priority);
                 //String order,String nameEvent, int day, int month, int year, String hour, String minute, String priority
 //                System.out.println(date.substring(0,2)+"/"+date.substring(3,5)+"/"+
 //                        date.substring(6,10)+" "+time.substring(3)+":"+time.substring(3,5));
@@ -69,7 +69,29 @@ public class Database {
         return listAppointments;
     }
 
+    public void deleteData(int order){
+        try{
+            String query = "Delete from eventCalendar where Id = "+order;
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
+    }
+
+    public void updateData(int start,int begin){
+        try{
+            for(int i = start;i<=begin;i++){
+                String query = "UPDATE eventCalendar SET Id = "+i+" WHERE Id = "+(i+1);
+                Statement statement = conn.createStatement();
+                statement.executeUpdate(query);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     public void closeDatabase(){
         try {
             conn.close();
