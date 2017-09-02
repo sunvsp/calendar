@@ -12,7 +12,7 @@ public class ResourceAppointmentTest {
 
 
     public Appointment createAppointment() throws Exception{
-        Appointment a = new Appointment("HelloWorld",30,8,1997,"11","54","None","1");
+        Appointment a = new Appointment("1","HelloWorld",30,8,1997,"11","54","None");
         return a;
     }
 

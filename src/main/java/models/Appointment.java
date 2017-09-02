@@ -18,44 +18,84 @@ public class Appointment {
 
 
 
-    public Appointment(String nameEvent, int day, int month, int year, String hour, String minute, String priority,String order) throws ParseException {
+    public Appointment(String order,String nameEvent, int day, int month, int year, String hour, String minute, String priority) throws ParseException {
 
         DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        myTime = dateTimeFormat.parse(day+"/"+month+"/"+year+" "+hour+":"+minute);
+        setMyTime(dateTimeFormat.parse(day+"/"+month+"/"+year+" "+hour+":"+minute));
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
 
-        title = new SimpleStringProperty(nameEvent);
-        date = new SimpleStringProperty(formatDate.format(myTime));
-        time = new SimpleStringProperty(formatTime.format(myTime));
-        this.priority = new SimpleStringProperty(priority);
-        this.order = new SimpleStringProperty(order);
+        setTitle(new SimpleStringProperty(nameEvent));
+        setDate(new SimpleStringProperty(formatDate.format(getMyTime())));
+        setTime(new SimpleStringProperty(formatTime.format(getMyTime())));
+        this.setPriority(new SimpleStringProperty(priority));
+        this.setOrder(new SimpleStringProperty(order));
     }
 
     public String getTitle(){
-        return "   "+title.get();
+        return "   "+ getTitles().get();
     }
 
     public String getDate(){
-        return "     "+date.get();
+        return "     "+ getDates().get();
     }
 
     public String getTime(){
-        return "        "+time.get();
+        return "        "+ getTimes().get();
     }
     public String getPriority(){
-        return "       "+priority.get();
+        return "       "+ getPrioritys().get();
     }
     public String getOrder(){
-        return "      "+order.get();
+        return "      "+ getOrders().get();
     }
 
 
+    public Date getMyTime() {
+        return myTime;
+    }
 
+    public void setMyTime(Date myTime) {
+        this.myTime = myTime;
+    }
 
+    public SimpleStringProperty getTitles() {
+        return title;
+    }
 
+    public void setTitle(SimpleStringProperty title) {
+        this.title = title;
+    }
 
+    public SimpleStringProperty getDates() {
+        return date;
+    }
 
+    public void setDate(SimpleStringProperty date) {
+        this.date = date;
+    }
 
+    public SimpleStringProperty getTimes() {
+        return time;
+    }
 
+    public void setTime(SimpleStringProperty time) {
+        this.time = time;
+    }
+
+    public SimpleStringProperty getPrioritys() {
+        return priority;
+    }
+
+    public void setPriority(SimpleStringProperty priority) {
+        this.priority = priority;
+    }
+
+    public SimpleStringProperty getOrders() {
+        return order;
+    }
+
+    public void setOrder(SimpleStringProperty order) {
+        this.order = order;
+    }
 }

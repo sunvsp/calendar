@@ -25,5 +25,9 @@ public class ResourceAppointment {
         return listAppointments;
     }
 
+    public void setListAppointments(ObservableList<Appointment> observableList){
+        listAppointments = observableList;
+    }
+
 
 }
