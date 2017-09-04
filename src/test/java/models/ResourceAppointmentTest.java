@@ -25,6 +25,16 @@ public class ResourceAppointmentTest {
 
     }
 
+    @Test
+    public void deleteA()throws Exception {
+        ResourceAppointment r = new ResourceAppointment();
+        Appointment appointment = createAppointment();
+        r.addApointment(appointment);
+        r.deleteAp(appointment);
+        assertEquals(true,r.getListAppointment().isEmpty() );
+
+    }
+
 
 
 }
