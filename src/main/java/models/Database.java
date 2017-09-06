@@ -29,7 +29,7 @@ public class Database {
     public void insertData(Appointment a){
         try {
             String query = "INSERT INTO eventCalendar (Id,'Title','Date','Time','Priority') " +
-                    "VALUES ("+Integer.parseInt(a.getOrder().trim())+",'"+a.getTitle().trim()+"','"+a.getDate().trim()+
+                    "VALUES ( "+Integer.parseInt(a.getOrder().trim())+",'"+a.getTitle().trim()+"','"+a.getDate().trim()+
                     "','"+a.getTime().trim()+"','"+a.getPriority().trim()+"');";
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
