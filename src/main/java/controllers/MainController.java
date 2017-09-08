@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,33 +15,28 @@ import javafx.scene.Parent;
 import models.Appointment;
 import models.Database;
 import models.ResourceAppointment;
-
 import java.util.Observable;
 import java.util.Observer;
 
 
 public class MainController implements Observer{
 
-
-
     private Database database;
     private ResourceAppointment resourceAppointment ;
     private ControllerAdd controllerAdd;
     private ControllerEdit controllerEdit;
-
-
-
+    private ControllerNotes controllerNotes;
 
     @FXML private TableView<Appointment> tableView;
     @FXML private Button addAppointment;
     @FXML private Stage stage;
     @FXML private MenuItem exit,about,news;
-    @FXML private TableColumn<Appointment, SimpleStringProperty> order;
+    @FXML private TableColumn<Appointment, SimpleStringProperty> repeat;
     @FXML private TableColumn<Appointment, SimpleStringProperty> title;
     @FXML private TableColumn<Appointment, SimpleStringProperty> date;
     @FXML private TableColumn<Appointment, SimpleStringProperty> time;
     @FXML private TableColumn<Appointment, SimpleStringProperty> priority;
-    @FXML private ObservableList<String> comboTable = FXCollections.observableArrayList("Edit","Delete");
+
 
     public MainController(){
         resourceAppointment = ResourceAppointment.getInstance();
@@ -56,19 +49,22 @@ public class MainController implements Observer{
     //setting
     @FXML
     public void initialize(){
-        order.setCellValueFactory(new PropertyValueFactory<>("order"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
+        repeat.setCellValueFactory(new PropertyValueFactory<>("repeat"));
         priority.setCellValueFactory(new PropertyValueFactory<>("priority"));
         tableView.setItems(resourceAppointment.getListAppointment());
         ContextMenu cm = new ContextMenu();
-        MenuItem mi1 = new MenuItem("Edit");
+        MenuItem mi1 = new MenuItem("Notes");
         cm.getItems().add(mi1);
-        MenuItem mi2 = new MenuItem("Delete");
+        MenuItem mi2 = new MenuItem("Edit");
         cm.getItems().add(mi2);
-        mi1.setOnAction(event -> editAppointment());
-        mi2.setOnAction(event -> deleteAppointment());
+        MenuItem mi3 = new MenuItem("Delete");
+        cm.getItems().add(mi3);
+        mi1.setOnAction(event -> notesAppointment());
+        mi2.setOnAction(event -> editAppointment());
+        mi3.setOnAction(event -> deleteAppointment());
         tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -85,7 +81,24 @@ public class MainController implements Observer{
         });
     }
 
-
+    public void notesAppointment(){
+        Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
+        if(productSelected != null) {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/Notes.fxml"));
+                Parent window = loader.load();
+                controllerNotes = loader.getController();
+                controllerNotes.viewNotes(productSelected.getNotes());
+                stage = new Stage();
+                stage.setTitle("Notes");
+                stage.setScene(new Scene(window,450,300));
+                stage.setResizable(false);
+                stage.show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void editAppointment(){
         //System.out.println("Edit!!!");
@@ -99,16 +112,15 @@ public class MainController implements Observer{
                 controllerEdit.setAp(productSelected);
                 stage = new Stage();
                 stage.setTitle("EditAppointment");
-                stage.setScene(new Scene(window,400,280));
+                stage.setScene(new Scene(window,400,475));
                 stage.setResizable(false);
                 stage.show();
-            }catch (Exception e){
+           }catch (Exception e){
                 e.printStackTrace();
             }
         }
 
     }
-
 
     public void deleteAppointment(){
 
@@ -119,20 +131,9 @@ public class MainController implements Observer{
        if(productSelected != null) {
             resourceAppointment.deleteAp(productSelected);
             refresh();
-            database.deleteData(Integer.parseInt(productSelected.getOrder().trim()));
-
-            if(resourceAppointment.getListAppointment().size() > 0) {
-                updateIdDatabase(Integer.parseInt(productSelected.getOrder().trim()), resourceAppointment.getListAppointment().size());
-            }
-//           database.readAndAddData();
+            database.deleteData(productSelected.getId());
        }
     }
-
-
-    public void updateIdDatabase(int start,int begin){
-        database.updateData(start,begin);
-    }
-
 
     @FXML
     public void buttonAddAp(ActionEvent event){
@@ -141,10 +142,10 @@ public class MainController implements Observer{
             Parent window = loader.load();
             controllerAdd = loader.getController();
             controllerAdd.addObserver(this);
-            controllerAdd.setCount(resourceAppointment.getListAppointment().size()+1);
+            controllerAdd.setCount(resourceAppointment.countSet());
             stage = new Stage();
             stage.setTitle("New Appointment");
-            stage.setScene(new Scene(window,400,280));
+            stage.setScene(new Scene(window,400,475));
             stage.setResizable(false);
             stage.show();
         }catch (Exception e){
@@ -163,9 +164,11 @@ public class MainController implements Observer{
     public void update(Observable o, Object appointment) {
         if(o instanceof ControllerAdd){
             database.insertData((Appointment) appointment);
+            resourceAppointment.addApointment((Appointment) appointment);
+            refresh();
         }
         if(o instanceof  ControllerEdit){
-            database.updateDatabase((Appointment) appointment);
+            database.updateData((Appointment) appointment);
         }
         refresh();
     }

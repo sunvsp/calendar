@@ -22,7 +22,6 @@ public class ControllerEdit extends Observable {
 
 
     private Appointment appointment;
-
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
     private ObservableList<String> itemP = FXCollections.observableArrayList("None","!!!","!","!");
     private ObservableList<String> itemH = FXCollections.observableArrayList("00","01","02","03","04",
@@ -38,6 +37,8 @@ public class ControllerEdit extends Observable {
     @FXML private TextField field;
     @FXML private DatePicker datePicker;
     @FXML private MenuItem exit,about;
+    @FXML private Label repeat;
+    @FXML private TextArea notes;
 
 
     //set
@@ -63,6 +64,7 @@ public class ControllerEdit extends Observable {
             appointment.setDate(new SimpleStringProperty(formatDate.format(myTime)));
             appointment.setTime(new SimpleStringProperty(formatTime.format(myTime)));
             appointment.setPriority(new SimpleStringProperty(priority.getValue().toString()));
+            appointment.setNotes(notes.getText());
         }catch(ParseException e){
             e.printStackTrace();
         }
@@ -74,23 +76,26 @@ public class ControllerEdit extends Observable {
 
     public void setAp(Appointment appointment){
         this.appointment =appointment;
-        field.setText(appointment.getTitle().trim());
-        String time = appointment.getTime().trim();
-        hour.setValue(time.substring(3));
+        field.setText(appointment.getTitle());
+        String time = appointment.getTime();
+        hour.setValue(time.substring(0,2));
 
         minute.setValue(time.substring(3,5));
-        priority.setValue(appointment.getPriority().trim());
-        String date = appointment.getDate().trim();
+        priority.setValue(appointment.getPriority());
+        String date = appointment.getDateA();
+        //System.out.println(date);
         LocalDate d = LocalDate.parse(date.substring(6,10)+"-"+date.substring(3,5)+"-"+date.substring(0,2));
         //System.out.println(d);
         datePicker.setValue(d);
+        repeat.setText(appointment.getRepeat());
+        notes.setText(appointment.getNotes());
     }
-
 
     @FXML
     public  void exitMenu(ActionEvent e){
         closePage();
     }
+
     public void closePage(){
         // get a handle to the stage
         Stage stage = (Stage) submit.getScene().getWindow();

@@ -31,26 +31,13 @@ public class ResourceAppointment {
     }
 
     public void deleteAp(Appointment appointment){
-
-        if(listAppointments.size() > 0) {
-
-            for (int i = Integer.parseInt(appointment.getOrder().trim()) - 1; i < listAppointments.size(); i++) {
-
-
-                int order = Integer.parseInt(listAppointments.get(i).getOrder().trim());
-                if(order > 1) {
-                    order--;
-                    listAppointments.get(i).setOrder(new SimpleStringProperty(order + ""));
-                }
-
-            }
-        }
         listAppointments.remove(appointment);
-
-
-//        System.out.println(listAppointments);
-//        System.out.println(listAppointments.get(0).getOrder());
     }
 
-
+    public int countSet(){
+        if(listAppointments.isEmpty()){
+            return 1;
+        }
+        return (listAppointments.get(listAppointments.size()-1).getId()+1);
+    }
 }

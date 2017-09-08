@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -48,11 +49,11 @@
          <children>
             <TableView fx:id="tableView" prefHeight="321.0" prefWidth="535.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columns>
-                <TableColumn fx:id="order" prefWidth="56.0" text="Order" />
-                <TableColumn fx:id="title" prefWidth="204.0" text="Title" />
-                  <TableColumn fx:id="date" prefWidth="99.0" text="Date" />
-                  <TableColumn fx:id="time" prefWidth="84.0" text="Time" />
-                  <TableColumn fx:id="priority" prefWidth="83.0" text="Priority" />
+                <TableColumn fx:id="title" prefWidth="221.0" text="Title" />
+                  <TableColumn fx:id="date" prefWidth="103.0" text="Date" />
+                  <TableColumn fx:id="time" prefWidth="72.0" text="Time" />
+                  <TableColumn fx:id="priority" prefWidth="78.0" text="Priority" />
+                  <TableColumn fx:id="repeat" prefWidth="66.0" text="Repeat" />
               </columns>
             </TableView>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -68,11 +69,24 @@
                   <Button fx:id="addAppointment" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddAp" text="AddAppointment" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <Label alignment="BOTTOM_CENTER" prefHeight="39.0" prefWidth="153.0" text="Appointment" GridPane.columnIndex="1">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
+            <GridPane GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="BOTTOM_CENTER" prefHeight="39.0" prefWidth="153.0" text="Appointment">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="17.0" prefWidth="180.0" promptText="Search : dd/MM/yyyy" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
          </children>
       </GridPane>
    </bottom>
