@@ -46,7 +46,7 @@ public class ResourceAppointment {
         return (listAppointments.get(listAppointments.size()-1).getId()+1);
     }
 
-    public ObservableList<Appointment> searchAppointment(LocalDate dates,Database database){
+    public ObservableList<Appointment> searchAppointment(LocalDate dates){
         ObservableList<Appointment> list = FXCollections.observableArrayList();
         for (int a = 0; a  < listAppointments.size();a++) {
             String date = listAppointments.get(a).getDateA();

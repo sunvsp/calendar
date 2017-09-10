@@ -46,7 +46,7 @@ public class MainController implements Observer{
         database = new Database();
         resourceAppointment.setListAppointments(database.readAndAddData());
         LocalDate date = LocalDate.now();
-        resourceAppointment.searchAppointment(date,database);
+        resourceAppointment.searchAppointment(date);
 //        database.updateData(1,2);
 //        database.readAndAddData();
     }
@@ -200,7 +200,7 @@ public class MainController implements Observer{
         LocalDate date = datePicker.getValue();
 //        System.out.println(date.getDayOfWeek().toString());
         //System.out.println(date.getDayOfWeek().getValue());
-        tableView.setItems(resourceAppointment.searchAppointment(date,database));
+        tableView.setItems(resourceAppointment.searchAppointment(date));
         tableView.refresh();
     }
 
