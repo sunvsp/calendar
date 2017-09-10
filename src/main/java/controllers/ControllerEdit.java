@@ -20,7 +20,7 @@ import java.util.Observable;
 public class ControllerEdit extends Observable {
 
 
-
+    private ObservableList<Appointment> la;
     private Appointment appointment;
     private ResourceAppointment resourceAppointment = ResourceAppointment.getInstance();
     private ObservableList<String> itemP = FXCollections.observableArrayList("None","!!!","!","!");
@@ -74,8 +74,11 @@ public class ControllerEdit extends Observable {
 
     }
 
+
+
     public void setAp(Appointment appointment){
         this.appointment =appointment;
+
         field.setText(appointment.getTitle());
         String time = appointment.getTime();
         hour.setValue(time.substring(0,2));

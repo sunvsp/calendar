@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Appointment {
+public class Appointment implements Cloneable{
     private Date myTime;
 
     private SimpleStringProperty title;
@@ -18,10 +18,13 @@ public class Appointment {
     private String notes;
     private int id;
 
+
+    private int parent = 0;
+
     //Constructor
     public Appointment(int id,String nameEvent, int day, int month, int year, String hour, String minute, String priority,String repeat,String notes) throws ParseException {
         DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        setMyTime(dateTimeFormat.parse(day+"/"+month+"/"+year+" "+hour+":"+minute));
+        myTime = (dateTimeFormat.parse(day+"/"+month+"/"+year+" "+hour+":"+minute));
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
 
@@ -39,7 +42,6 @@ public class Appointment {
         return getTitles().get();
     }
     public String getDate(){
-
         return getDates().get().substring(0,3)+myTime.toString().substring(4,7)+getDates().get().substring(5,10);
     }
     public String getTime(){
@@ -55,7 +57,9 @@ public class Appointment {
         return myTime;
     }
     public void setMyTime(Date myTime) {
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         this.myTime = myTime;
+        setDate(new SimpleStringProperty(formatDate.format(getMyTime())));
     }
     public SimpleStringProperty getTitles() {
         return title;
@@ -84,6 +88,9 @@ public class Appointment {
     public int getId() {
         return id;
     }
+    public void setId(int id){
+        this.id = id;
+    }
     public SimpleStringProperty getRepeats() {
         return repeat;
     }
@@ -96,4 +103,17 @@ public class Appointment {
     public String getDateA(){
         return getDates().get();
     }
+
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
 }

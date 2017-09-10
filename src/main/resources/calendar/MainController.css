@@ -1,0 +1,12 @@
+
+
+#ap{
+    -fx-background-color: whitesmoke;
+}
+#ap:hover{
+    -fx-text-fill: salmon;
+
+}
+#ap:pressed{
+    -fx-text-fill: dimgray;
+}

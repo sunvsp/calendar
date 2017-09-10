@@ -15,6 +15,8 @@ import javafx.scene.Parent;
 import models.Appointment;
 import models.Database;
 import models.ResourceAppointment;
+
+import java.time.LocalDate;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,7 +30,7 @@ public class MainController implements Observer{
     private ControllerNotes controllerNotes;
 
     @FXML private TableView<Appointment> tableView;
-    @FXML private Button addAppointment;
+    @FXML private Button addAppointment,ap;
     @FXML private Stage stage;
     @FXML private MenuItem exit,about,news;
     @FXML private TableColumn<Appointment, SimpleStringProperty> repeat;
@@ -36,12 +38,15 @@ public class MainController implements Observer{
     @FXML private TableColumn<Appointment, SimpleStringProperty> date;
     @FXML private TableColumn<Appointment, SimpleStringProperty> time;
     @FXML private TableColumn<Appointment, SimpleStringProperty> priority;
+    @FXML private DatePicker datePicker;
 
 
     public MainController(){
         resourceAppointment = ResourceAppointment.getInstance();
         database = new Database();
         resourceAppointment.setListAppointments(database.readAndAddData());
+        LocalDate date = LocalDate.now();
+        resourceAppointment.searchAppointment(date,database);
 //        database.updateData(1,2);
 //        database.readAndAddData();
     }
@@ -54,7 +59,7 @@ public class MainController implements Observer{
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
         repeat.setCellValueFactory(new PropertyValueFactory<>("repeat"));
         priority.setCellValueFactory(new PropertyValueFactory<>("priority"));
-        tableView.setItems(resourceAppointment.getListAppointment());
+        setDateView();
         ContextMenu cm = new ContextMenu();
         MenuItem mi1 = new MenuItem("Notes");
         cm.getItems().add(mi1);
@@ -103,13 +108,20 @@ public class MainController implements Observer{
     public void editAppointment(){
         //System.out.println("Edit!!!");
         Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
+        Appointment a = productSelected;
+        if(productSelected.getId() != 0){
+            for ( Appointment ap:resourceAppointment.getListAppointment()) {
+                if(ap.getId() == productSelected.getParent()){
+                    a = ap;
+                }
+            }}
         if(productSelected != null) {
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/EditAppointment.fxml"));
                 Parent window = loader.load();
                 controllerEdit = loader.getController();
                 controllerEdit.addObserver(this);
-                controllerEdit.setAp(productSelected);
+                controllerEdit.setAp(a);
                 stage = new Stage();
                 stage.setTitle("EditAppointment");
                 stage.setScene(new Scene(window,400,475));
@@ -130,7 +142,7 @@ public class MainController implements Observer{
         //System.out.println(productSelected.getOrder().trim());
        if(productSelected != null) {
             resourceAppointment.deleteAp(productSelected);
-            refresh();
+           setDateView();
             database.deleteData(productSelected.getId());
        }
     }
@@ -165,20 +177,38 @@ public class MainController implements Observer{
         if(o instanceof ControllerAdd){
             database.insertData((Appointment) appointment);
             resourceAppointment.addApointment((Appointment) appointment);
-            refresh();
         }
         if(o instanceof  ControllerEdit){
             database.updateData((Appointment) appointment);
         }
-        refresh();
+        setDateView();
     }
 
     public Database getDatabase() {
         return database;
     }
 
-    public void refresh(){
-        tableView.setItems(resourceAppointment.getListAppointment());
+    public void refresh(ActionEvent event){
+        setDateView();
+        datePicker.getEditor().clear();
+        datePicker.setPromptText("--- Search Appointment");
+
+    }
+
+    @FXML
+    public void searchAppointment(){
+        LocalDate date = datePicker.getValue();
+//        System.out.println(date.getDayOfWeek().toString());
+        //System.out.println(date.getDayOfWeek().getValue());
+        tableView.setItems(resourceAppointment.searchAppointment(date,database));
+        tableView.refresh();
+    }
+
+    public void setDateView(){
+        if(resourceAppointment.getListAppointment().size() <= 15){
+            tableView.setItems(resourceAppointment.getListAppointment());
+        }else{
+            tableView.setItems(resourceAppointment.monthAppointment());}
         tableView.refresh();
     }
 }
