@@ -79,6 +79,8 @@ public class ResourceAppointment {
                         list.add(listAppointments.get(a));
                     }
                 }
+            }else if(d.getDayOfMonth() == dates.getDayOfMonth() && d.getMonthValue() == dates.getMonthValue()){
+                list.add(listAppointments.get(a));
             }
         }
         return list;

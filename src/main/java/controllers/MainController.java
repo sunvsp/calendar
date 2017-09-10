@@ -205,10 +205,8 @@ public class MainController implements Observer{
     }
 
     public void setDateView(){
-        if(resourceAppointment.getListAppointment().size() <= 15){
-            tableView.setItems(resourceAppointment.getListAppointment());
-        }else{
-            tableView.setItems(resourceAppointment.monthAppointment());}
+        tableView.setItems(resourceAppointment.getListAppointment());
+
         tableView.refresh();
     }
 }
