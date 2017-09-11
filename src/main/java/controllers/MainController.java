@@ -138,12 +138,19 @@ public class MainController implements Observer{
 
         //System.out.println("Delete!!!");
         Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
+        Appointment a = productSelected;
+        if(productSelected.getId() != 0){
+            for ( Appointment ap:resourceAppointment.getListAppointment()) {
+                if(ap.getId() == productSelected.getParent()){
+                    a = ap;
+                }
+            }}
         //System.out.println(productSelected.getTitle());
         //System.out.println(productSelected.getOrder().trim());
        if(productSelected != null) {
-            resourceAppointment.deleteAp(productSelected);
+            resourceAppointment.deleteAp(a);
            setDateView();
-            database.deleteData(productSelected.getId());
+            database.deleteData(a.getId());
        }
     }
 
