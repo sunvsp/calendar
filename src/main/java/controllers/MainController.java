@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import models.Appointment;
-import models.Database;
+import Database.Database;
 import models.ResourceAppointment;
 
 import java.time.LocalDate;

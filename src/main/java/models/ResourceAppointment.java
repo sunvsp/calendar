@@ -86,18 +86,18 @@ public class ResourceAppointment {
         return list;
     }
 
-    public ObservableList<Appointment> monthAppointment(){
-        LocalDate date = LocalDate.now();
-        ObservableList<Appointment> list = FXCollections.observableArrayList();
-        for (Appointment a: listAppointments) {
-            //System.out.println(date.getMonth().toString().toLowerCase().substring(0,3));
-            //System.out.println(a.getDate().toLowerCase().substring(3,6));
-            if(date.getMonth().toString().toLowerCase().substring(0,3).equals(a.getDate().toLowerCase().substring(3,6))){
-                list.add(a);
-            }
-        }
-        return list;
-    }
+//    public ObservableList<Appointment> monthAppointment(){
+//        LocalDate date = LocalDate.now();
+//        ObservableList<Appointment> list = FXCollections.observableArrayList();
+//        for (Appointment a: listAppointments) {
+//            //System.out.println(date.getMonth().toString().toLowerCase().substring(0,3));
+//            //System.out.println(a.getDate().toLowerCase().substring(3,6));
+//            if(date.getMonth().toString().toLowerCase().substring(0,3).equals(a.getDate().toLowerCase().substring(3,6))){
+//                list.add(a);
+//            }
+//        }
+//        return list;
+//    }
 
 
     private Appointment createAp(Appointment a,LocalDate dates){
@@ -117,14 +117,14 @@ public class ResourceAppointment {
         return null;
     }
 
-    private boolean check(Appointment a) {
-        for (Appointment ap : listAppointments) {
-            if (a.getDate().equals(ap.getDate())) {
-                return false;
-                }
-
-        }
-        return true;
-    }
+//    private boolean check(Appointment a) {
+//        for (Appointment ap : listAppointments) {
+//            if (a.getDate().equals(ap.getDate())) {
+//                return false;
+//                }
+//
+//        }
+//        return true;
+//    }
 
 }
