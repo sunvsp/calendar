@@ -1,119 +1,84 @@
 package models;
 
-import javafx.beans.property.SimpleStringProperty;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class Appointment implements Cloneable{
-    private Date myTime;
+public class Appointment {
 
-    private SimpleStringProperty title;
-    private SimpleStringProperty date;
-    private SimpleStringProperty time;
-    private SimpleStringProperty priority;
-    private SimpleStringProperty repeat;
-    private String notes;
     private int id;
+    private String nameEvent;
+    private String repeat;
+    private String notes;
+    private Dates date;
+    private Time time;
+    private String priority;
+    private Dates searchDate;
 
 
-    private int parent = 0;
 
     //Constructor
-    public Appointment(int id,String nameEvent, int day, int month, int year, String hour, String minute, String priority,String repeat,String notes) throws ParseException {
-        DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        myTime = (dateTimeFormat.parse(day+"/"+month+"/"+year+" "+hour+":"+minute));
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm");
-
-        setTitle(new SimpleStringProperty(nameEvent));
-        setDate(new SimpleStringProperty(formatDate.format(getMyTime())));
-        time = new SimpleStringProperty(formatTime.format(myTime));
-        this.setPriority(new SimpleStringProperty(priority));
-        this.repeat = new SimpleStringProperty(repeat);
-        this.setNotes(notes);
+    public Appointment(int id,String nameEvent,Dates date,Time time,String priority,String repeat,String notes)  {
         this.id = id;
-
-    }
-
-    public String getTitle(){
-        return getTitles().get();
-    }
-    public String getDate(){
-        return getDates().get().substring(0,3)+myTime.toString().substring(4,7)+getDates().get().substring(5,10);
-    }
-    public String getTime(){
-        return getTimes().get();
-    }
-    public String getPriority(){
-        return getPrioritys().get();
-    }
-    public String getRepeat(){
-        return getRepeats().get();
-    }
-    public Date getMyTime() {
-        return myTime;
-    }
-    public void setMyTime(Date myTime) {
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        this.myTime = myTime;
-        setDate(new SimpleStringProperty(formatDate.format(getMyTime())));
-    }
-    public SimpleStringProperty getTitles() {
-        return title;
-    }
-    public void setTitle(SimpleStringProperty title) {
-        this.title = title;
-    }
-    public SimpleStringProperty getDates() {
-        return date;
-    }
-    public void setDate(SimpleStringProperty date) {
+        this.setNameEvent(nameEvent);
         this.date = date;
-    }
-    public SimpleStringProperty getTimes() {
-        return time;
-    }
-    public void setTime(SimpleStringProperty time) {
         this.time = time;
+        this.setRepeat(repeat);
+        this.setNotes(notes);
+        this.setPriority(priority);
+        setSearchDate(new Dates());
     }
-    public SimpleStringProperty getPrioritys() {
-        return priority;
-    }
-    public void setPriority(SimpleStringProperty priority) {
-        this.priority = priority;
-    }
+
+
     public int getId() {
         return id;
     }
-    public void setId(int id){
-        this.id = id;
+
+    public String getNameEvent() {
+        return nameEvent;
     }
-    public SimpleStringProperty getRepeats() {
+
+    public void setNameEvent(String nameEvent) {
+        this.nameEvent = nameEvent;
+    }
+
+    public String getRepeat() {
         return repeat;
     }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+
     public String getNotes() {
         return notes;
     }
+
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    public String getDateA(){
-        return getDates().get();
+
+    public Dates getDate() {
+        return date;
     }
 
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+
+    public Time getTime() {
+        return time;
     }
 
-    public int getParent() {
-        return parent;
+
+    public String getPriority() {
+        return priority;
     }
 
-    public void setParent(int parent) {
-        this.parent = parent;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
+    public Dates getSearchDate() {
+        return searchDate;
+    }
+
+    public void setSearchDate(Dates searchDate) {
+        this.searchDate = searchDate;
+    }
 }

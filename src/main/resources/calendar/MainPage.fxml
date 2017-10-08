@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" stylesheets="@MainController.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" stylesheets="@MainController.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerMain">
    <top>
       <MenuBar prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="news" mnemonicParsing="false" onAction="#buttonAddAp" text="New" />
+                  <MenuItem fx:id="news" mnemonicParsing="false" onAction="#addAppointment" text="New" />
               <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Close" />
             </items>
           </Menu>
@@ -65,7 +65,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="addAppointment" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddAp" text="AddAppointment" GridPane.columnIndex="1" />
+                  <Button fx:id="addAppointment" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addAppointment" text="AddAppointment" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1">
