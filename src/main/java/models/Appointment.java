@@ -11,7 +11,6 @@ public class Appointment {
     private Dates date;
     private Time time;
     private String priority;
-    private Dates searchDate;
 
 
 
@@ -24,7 +23,6 @@ public class Appointment {
         this.setRepeat(repeat);
         this.setNotes(notes);
         this.setPriority(priority);
-        setSearchDate(new Dates());
     }
 
 
@@ -74,11 +72,4 @@ public class Appointment {
         this.priority = priority;
     }
 
-    public Dates getSearchDate() {
-        return searchDate;
-    }
-
-    public void setSearchDate(Dates searchDate) {
-        this.searchDate = searchDate;
-    }
 }
