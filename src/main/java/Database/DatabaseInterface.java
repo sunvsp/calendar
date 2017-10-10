@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public interface DatabaseInterface {
 
-    public void openDatabase();
-    public ArrayList<Appointment> readData();
-    public void deleteData(int id);
-    public void closeDatabase();
-    public void updateData(Appointment appointment);
-    public void insertData(Appointment a);
+     void openDatabase();
+     ArrayList<Appointment> readData();
+     void deleteData(int id);
+     void closeDatabase();
+     void updateData(Appointment appointment);
+     void insertData(Appointment a);
 
 
 
