@@ -15,12 +15,16 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.stage.WindowEvent;
 import models.Appointment;
 import Database.Database;
 
 import models.Dates;
 import models.ResourceAppointment;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,7 +54,8 @@ public class ControllerMain implements Observer{
 
 
     public ControllerMain(){
-        database = new Database();
+        ApplicationContext bf = new ClassPathXmlApplicationContext("/fileXML/Database.xml");
+        database = (DatabaseInterface) bf.getBean("database");
         database.openDatabase();
         resourceAppointment = ResourceAppointment.getInstance();
         resourceAppointment.setListAppointments(database.readData());
@@ -95,6 +100,29 @@ public class ControllerMain implements Observer{
                 }
             }
         });
+    }
+
+    public void display(Stage primaryStage){
+        try{
+            //Parent root = FXMLLoader.load(getClass().getResource("calendar/MainPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/MainPage.fxml"));
+            Parent root = loader.load();
+            primaryStage.setTitle("Calendar");
+            primaryStage.setScene(new Scene(root, 600, 500));
+            //mainController.setDatabase(new Database());
+            primaryStage.setResizable(false);
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    database.closeDatabase();
+                }
+            });
+            primaryStage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
     }
 
     public void notesAppointment(){
