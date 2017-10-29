@@ -1,10 +1,10 @@
-package models;
+package Common.models;
 
+import Server.model.ResourceAppointment;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +19,7 @@ public class ResourceAppointmentTest {
         d.setDate(30,8,1997);
         Time t = new Time("10","20");
         appointment = new Appointment(1,"Sunny",d,t,"None","Daily","");
-        resourceAppointment = ResourceAppointment.getInstance();
+        resourceAppointment = new ResourceAppointment(null);
         resourceAppointment.setListAppointments(new ArrayList<>());
     }
 

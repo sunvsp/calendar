@@ -1,12 +1,13 @@
-package models;
+package Common.models;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Dates {
+public class Dates implements Serializable {
     private Date date;
     DateFormat dateTimeFormat;
 

@@ -1,6 +1,8 @@
-package models;
+package Common.models;
 
-public class Time {
+import java.io.Serializable;
+
+public class Time implements Serializable {
 
     private String hour ;
     private String minute;

@@ -1,6 +1,6 @@
-package Database;
+package Server.Database;
 
-import models.Appointment;
+import Common.models.Appointment;
 
 import java.util.ArrayList;
 

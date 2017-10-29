@@ -1,4 +1,4 @@
-package controllers;
+package Client.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

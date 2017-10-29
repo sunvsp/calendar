@@ -1,6 +1,7 @@
-package controllers;
+package Client.controllers;
 
-import Database.DatabaseInterface;
+import Common.AppointmentService;
+import Server.Database.DatabaseInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,19 +11,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.stage.WindowEvent;
-import models.Appointment;
-import Database.Database;
+import Common.models.Appointment;
 
-import models.Dates;
-import models.ResourceAppointment;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import Common.models.Dates;
+import Server.model.ResourceAppointment;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,7 +28,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class ControllerMain implements Observer{
+public class ControllerMain implements Observer {
 
     private DatabaseInterface database;
     private ResourceAppointment resourceAppointment ;
@@ -40,7 +36,7 @@ public class ControllerMain implements Observer{
     private ControllerEdit controllerEdit;
     private ControllerNotes controllerNotes;
     private  SimpleDateFormat formatDate;
-    @FXML private TableView<Appointment> tableView;
+    @FXML private TableView<Appointment> tableView = new TableView<>();
     @FXML private Button addAppointment,ap;
     @FXML private Stage stage;
     @FXML private MenuItem exit,about,news;
@@ -50,31 +46,26 @@ public class ControllerMain implements Observer{
     @FXML private TableColumn<Appointment, String> time;
     @FXML private TableColumn<Appointment, String> priority;
     @FXML private DatePicker datePicker;
+    private AppointmentService appointmentService;
 
 
 
     public ControllerMain(){
-        ApplicationContext bf = new ClassPathXmlApplicationContext("/fileXML/Database.xml");
-        database = (DatabaseInterface) bf.getBean("database");
-        database.openDatabase();
-        resourceAppointment = ResourceAppointment.getInstance();
-        resourceAppointment.setListAppointments(database.readData());
         formatDate = new SimpleDateFormat("dd/MMM/yyyy");
-
     }
+
+
+
 
     //setting
     @FXML
     public void initialize(){
         //set tableview
-
         title.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNameEvent()));
         date.setCellValueFactory(cellData -> new SimpleStringProperty(formatDate.format(cellData.getValue().getDate().getDate())));
-
         time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTime().getHour()+":"+cellData.getValue().getTime().getMinute()));
         repeat.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRepeat()));
         priority.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPriority()));
-        setTable(resourceAppointment.getListAppointment());
 
         ContextMenu cm = new ContextMenu();
         MenuItem mi1 = new MenuItem("Notes");
@@ -102,21 +93,18 @@ public class ControllerMain implements Observer{
         });
     }
 
-    public void display(Stage primaryStage){
+    public void display(Stage primaryStage,AppointmentService appointmentService){
+
         try{
             //Parent root = FXMLLoader.load(getClass().getResource("calendar/MainPage.fxml"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/calendar/MainPage.fxml"));
             Parent root = loader.load();
             primaryStage.setTitle("Calendar");
             primaryStage.setScene(new Scene(root, 600, 500));
-            //mainController.setDatabase(new Database());
+           ControllerMain controllerMain = loader.getController();
+            controllerMain.appointmentService = appointmentService;
+            controllerMain.setTable(controllerMain.appointmentService.getListAppointment());
             primaryStage.setResizable(false);
-            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    database.closeDatabase();
-                }
-            });
             primaryStage.show();
         }catch (IOException e){
             e.printStackTrace();
@@ -171,9 +159,9 @@ public class ControllerMain implements Observer{
         //System.out.println("Delete!!!");
         Appointment productSelected = tableView.getSelectionModel().getSelectedItem();
        if(productSelected != null) {
-            resourceAppointment.deleteAppointment(productSelected);
-            setTable(resourceAppointment.getListAppointment());
-            database.deleteData(productSelected.getId());
+           appointmentService.deleteAppointment(productSelected);
+           setTable(appointmentService.getListAppointment());
+            //database.deleteData(productSelected.getId());
        }
     }
 
@@ -184,7 +172,8 @@ public class ControllerMain implements Observer{
             Parent window = loader.load();
             controllerAdd = loader.getController();
             controllerAdd.addObserver(this);
-            controllerAdd.setCount(resourceAppointment.countSet());
+            //System.out.println(appointmentService);
+            controllerAdd.setCount(appointmentService.countSet());
             stage = new Stage();
             stage.setTitle("New Appointment");
             stage.setScene(new Scene(window,400,475));
@@ -197,7 +186,7 @@ public class ControllerMain implements Observer{
 
     @FXML
     public void exitProgram(){
-        database.closeDatabase();
+        //database.closeDatabase();
         System.exit(0);
 
     }
@@ -205,23 +194,21 @@ public class ControllerMain implements Observer{
     @Override
     public void update(Observable o, Object appointment) {
         if(o instanceof ControllerAdd){
-            database.insertData((Appointment) appointment);
-            resourceAppointment.addAppointment((Appointment) appointment);
+            //database.insertData((Appointment) appointment);
+            appointmentService.addAppointment((Appointment) appointment);
 
         }
         if(o instanceof  ControllerEdit){
-            database.updateData((Appointment) appointment);
+            //database.updateData((Appointment) appointment);
+            appointmentService.editAppointment((Appointment) appointment);
         }
-        setTable(resourceAppointment.getListAppointment());
+        setTable(appointmentService.getListAppointment());
     }
 
-    public DatabaseInterface getDatabase() {
-        return database;
-    }
 
 
     public void refresh(ActionEvent event){
-        setTable(resourceAppointment.getListAppointment());
+        setTable(appointmentService.getListAppointment());
         date.setCellValueFactory(cellData -> new SimpleStringProperty(formatDate.format(cellData.getValue().getDate().getDate())));
         datePicker.getEditor().clear();
         datePicker.setPromptText("--- Search Appointment");
@@ -235,7 +222,7 @@ public class ControllerMain implements Observer{
         dates.setDate(date.getDayOfMonth(),date.getMonthValue(),date.getYear());
         String d = formatDate.format(dates.getDate());
         this.date.setCellValueFactory(data -> new SimpleStringProperty(d));
-        setTable(resourceAppointment.searchAppoiment(date));
+        setTable(appointmentService.searchAppointment(date));
 
         
     }

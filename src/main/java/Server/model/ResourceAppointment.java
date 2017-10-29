@@ -1,32 +1,32 @@
-package models;
+package Server.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import sun.security.krb5.internal.APOptions;
+import Common.models.Appointment;
+import Common.AppointmentService;
+import Server.Database.DatabaseInterface;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ResourceAppointment {
-    private static ResourceAppointment instance = null;
-    private ResourceAppointment() {
-        // Exists only to defeat instantiation.
-    }
-    public static ResourceAppointment getInstance() {
-        if (instance == null) {
-            instance = new ResourceAppointment();
-        }
-        return instance;
-    }
+public class ResourceAppointment implements AppointmentService {
 
-    private ArrayList<Appointment> listAppointments = new ArrayList<>();
+    private DatabaseInterface database;
+    private ArrayList<Appointment> listAppointments ;
+
+
+    public  ResourceAppointment(DatabaseInterface database) {
+        this.database = database;
+        listAppointments = new ArrayList<>();
+        this.database.openDatabase();
+        setListAppointments(this.database.readData());
+        this.database.closeDatabase();
+    }
 
     public  void addAppointment(Appointment appointment){
+        database.openDatabase();
         getListAppointment().add(appointment);
+        database.insertData(appointment);
+        database.closeDatabase();
     }
 
     public ArrayList<Appointment> getListAppointment() {
@@ -38,7 +38,12 @@ public class ResourceAppointment {
     }
 
     public void deleteAppointment(Appointment appointment){
-        listAppointments.remove(appointment);
+
+        database.openDatabase();
+        listAppointments.remove(findAppointment(appointment));
+
+        database.deleteData(appointment.getId());
+        database.closeDatabase();
     }
 
     public int countSet(){
@@ -49,7 +54,7 @@ public class ResourceAppointment {
     }
 
 
-    public ArrayList<Appointment> searchAppoiment(LocalDate localDate) {
+    public ArrayList<Appointment> searchAppointment(LocalDate localDate) {
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Appointment> appointments = new ArrayList<>();
         for (Appointment a : listAppointments) {
@@ -72,4 +77,20 @@ public class ResourceAppointment {
         return appointments;
     }
 
+    public void editAppointment(Appointment appointment){
+        listAppointments.set(findAppointment(appointment),appointment);
+        database.openDatabase();
+        database.updateData(appointment);
+        database.closeDatabase();
+    }
+
+    public int findAppointment(Appointment appointment){
+        for(int i = 0; i < listAppointments.size();i++){
+            if(listAppointments.get(i).getId() == appointment.getId()){
+                return i;
+            }
+        }return -1;
+    }
+
 }
+

@@ -1,13 +1,10 @@
-package Database;
+package Server.Database;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import models.Appointment;
-import models.Dates;
-import models.Time;
+import Common.models.Appointment;
+import Common.models.Dates;
+import Common.models.Time;
 
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 

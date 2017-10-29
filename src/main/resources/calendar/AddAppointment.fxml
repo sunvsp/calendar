@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerAdd">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.controllers.ControllerAdd">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -85,7 +85,7 @@
                </padding>
             </Label>
             <ChoiceBox fx:id="priority" prefHeight="19.0" prefWidth="168.0" styleClass="button-priority" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button fx:id="add" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButton" text="add" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <Button fx:id="add" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButton" text="add" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <font>
                   <Font size="14.0" />
                </font>

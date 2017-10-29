@@ -1,8 +1,9 @@
-package models;
+package Common.models;
 
 
+import java.io.Serializable;
 
-public class Appointment {
+public class Appointment implements Serializable {
 
     private int id;
     private String nameEvent;
